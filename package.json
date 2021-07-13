@@ -8,6 +8,7 @@
     "post-update": "yarn upgrade --latest"
   },
   "dependencies": {
+    "beautiful-react-hooks": "0.35.0",
     "bootstrap": "5.0.2",
     "next": "latest",
     "react": "^16.13.1",
