@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { list } from "./members";
 import { useConditionalTimeout } from "beautiful-react-hooks";
 
-export const useAppState = () => {
+export const useAppState = (members) => {
   const [member, setMember] = useState({});
   const [intervalId, setIntervalId] = useState(null);
   const [isStarted, setIsStarted] = useState(false);
@@ -17,7 +16,7 @@ export const useAppState = () => {
       // 遅いルーレットを始める
       setIntervalId(
         setInterval(() => {
-          setMember(chooseMemberRandomly());
+          setMember(chooseMemberRandomly(members));
         }, 700)
       );
       // フラグを立てる
@@ -37,16 +36,21 @@ export const useAppState = () => {
     isSlowDown
   );
 
-  const chooseMember = startToChoose(setIntervalId, setMember, setIsStarted);
+  const chooseMember = startToChoose(
+    setIntervalId,
+    setMember,
+    setIsStarted,
+    members
+  );
 
   return [member.name, member.style, chooseMember];
 };
 
-function startToChoose(setIntervalId, setMember, setIsStarted) {
+function startToChoose(setIntervalId, setMember, setIsStarted, members) {
   return () => {
     setIntervalId(
       setInterval(() => {
-        setMember(chooseMemberRandomly());
+        setMember(chooseMemberRandomly(members));
       }, 300)
     );
     // TODO: idで指定しているところもっと上手くできないか？テストが書きにくい
@@ -64,7 +68,11 @@ function stopToChoose(intervalId, setIsStarted) {
   setIsStarted(false);
 }
 
-function chooseMemberRandomly() {
-  const member = list[Math.floor(Math.random() * Math.floor(list.length))];
+export function chooseMemberRandomly(members) {
+  if (!members) {
+    return { name: "", style: { backgroundColor: "#ffffff" } };
+  }
+  const member =
+    members[Math.floor(Math.random() * Math.floor(members.length))];
   return { name: member.name, style: { backgroundColor: member.color } };
 }

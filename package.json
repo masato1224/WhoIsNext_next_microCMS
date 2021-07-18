@@ -10,6 +10,7 @@
   "dependencies": {
     "beautiful-react-hooks": "0.35.0",
     "bootstrap": "5.0.2",
+    "microcms-js-sdk": "1.2.0",
     "next": "latest",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
