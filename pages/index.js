@@ -23,7 +23,7 @@ export async function getServerSideProps() {
   // 外部APIからデータを取得します。
   const res = await getClient().get({
     endpoint: "members",
-    queries: { fields: "name,color" }
+    queries: { fields: "name,color", limit: 50 }
   });
   const data = res.contents;
   // データをprops経由でページに渡します。
