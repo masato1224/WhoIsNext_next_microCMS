@@ -31,9 +31,13 @@ const styles = {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    transition: all 0.7s;
     z-index: 0;
+    animation: mood 11.35s linear;
+    @keyframes mood {
+      5% { background: rgba(0, 0, 0, 0.8); }
+      93% { background: rgba(0, 0, 0, 0.8); }
+      96% { background: rgba(255, 255, 255, 1); }
+    }
   `
 };
 
