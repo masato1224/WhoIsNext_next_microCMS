@@ -13,6 +13,7 @@
     "microcms-js-sdk": "1.2.0",
     "next": "latest",
     "react": "^16.13.1",
+    "react-custom-roulette": "^1.1.8",
     "react-dom": "^16.13.1"
   },
   "license": "MIT",
