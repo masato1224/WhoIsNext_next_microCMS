@@ -1,20 +1,19 @@
-import Layout from "../components/layout";
 import NaviBar from "../components/NaviBar";
 import Buttons from "../components/Buttons";
 import NameCard from "../components/NameCard";
-import { useAppState } from "../fooks/useAppState";
+import { useAppState } from "../hooks/useAppState";
 import { getClient } from "../lib/micorCMSClient";
 
 export default function IndexPage({ data }) {
   const [name, style, chooseMember] = useAppState(data);
   return (
-    <Layout>
+    <>
       <div className="App">
-        <NaviBar appName="Who's Next?" />
+        <NaviBar appName="🌝 Who's Next? 🌝" />
         <Buttons startOnClick={() => chooseMember()} />
         <NameCard color={style} name={name} />
       </div>
-    </Layout>
+    </>
   );
 }
 
