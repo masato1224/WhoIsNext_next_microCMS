@@ -8,8 +8,8 @@ import party from 'party-js';
 const styles = {
   root: css`
     & > div {
-      max-width: 1000px;
-      max-height: 1000px;
+      max-width: 70vh;
+      max-height: 70vh;
       margin: 0 auto;
       z-index: 10;
     }
