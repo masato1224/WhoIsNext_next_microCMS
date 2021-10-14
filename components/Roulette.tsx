@@ -125,7 +125,7 @@ const Roulette = ({ members }: { members: Member[] }) => {
           !isSpinning && setIsSpinning(!isSpinning);
         }}
       >
-        回して良いのは、当たる覚悟のある奴だけだ！
+        まわれ！
       </Button>
       <p className={isSpinning ? styles.spinningBack : ""}></p>
     </>
