@@ -117,6 +117,7 @@ const Roulette = ({ members }: { members: Member[] }) => {
           outerBorderWidth={5}
           radiusLineColor={"#fff"}
           radiusLineWidth={2}
+          rotationTimeCoefficient={0.2}
         />
       </div>
       <Button
