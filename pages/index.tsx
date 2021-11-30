@@ -11,7 +11,7 @@ export default function IndexPage({members}:{members:Member[]}) {
   return (
     <>
       <div className="App">
-        <NaviBar appName="🌝 Who's Next? 🌝" />
+        <NaviBar appName="🌝「まわれ！」と叫ぼう🌝" />
         <Roulette members={members} />
       </div>
     </>

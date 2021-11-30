@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Member } from "../interfaces/index";
 import { Wheel, WheelDataType } from "react-custom-roulette";
 import { css } from "linaria";
@@ -56,11 +56,11 @@ const Button = styled.div`
   /* from: https://jajaaan.co.jp/css/button/*/
   margin: 30px auto;
   width: 50vw;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.4;
   position: relative;
-  padding: 1rem 4rem;
+  padding: 0.5rem 2rem;
   cursor: pointer;
   user-select: none;
   transition: all 0.3s;
@@ -85,6 +85,8 @@ const Button = styled.div`
 const Roulette = ({ members }: { members: Member[] }) => {
   const [rouletteData, setRouletteData] = useState<WheelDataType[]>([]);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
+  const [isVoiceActive, setIsVoiceActive] = useState<boolean>(false);
+  const voiceTxtElm = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     setRouletteData(
@@ -96,6 +98,40 @@ const Roulette = ({ members }: { members: Member[] }) => {
       })
     );
   }, [members]);
+
+  useEffect(() => {
+    // @ts-ignore
+    const rec = new webkitSpeechRecognition();
+    rec.continuous = false
+    rec.interimResults = false
+    rec.lang = "ja-JP";
+
+    rec.onresult = (e:any) => {
+      rec.stop()
+
+      for (var i = e.resultIndex; i < e.results.length; i++) {
+        if (!e.results[i].isFinal) continue;
+
+        const { transcript } = e.results[i][0];
+        console.log(transcript)
+        voiceTxtElm.current!.innerHTML = transcript;
+        if(['まわれ', '回れ'].includes(transcript)){
+          !isSpinning && setIsSpinning(!isSpinning);
+        }
+      }
+    }
+    rec.onaudiostart = () => { 
+      setIsVoiceActive(!isVoiceActive);
+    }
+    rec.onend = () => { rec.start(); }
+
+    rec.start()
+  }, []);
+
+  useEffect(() => {
+    isVoiceActive && (voiceTxtElm.current!.innerHTML = '準備OK...');
+  }, [isVoiceActive]);
+
 
   return (
     <>
@@ -117,6 +153,7 @@ const Roulette = ({ members }: { members: Member[] }) => {
           outerBorderWidth={5}
           radiusLineColor={"#fff"}
           radiusLineWidth={2}
+          rotationTimeCoefficient={0.20}
         />
       </div>
       <Button
@@ -125,7 +162,7 @@ const Roulette = ({ members }: { members: Member[] }) => {
           !isSpinning && setIsSpinning(!isSpinning);
         }}
       >
-        まわれ！
+        <span ref={voiceTxtElm}></span>
       </Button>
       <p className={isSpinning ? styles.spinningBack : ""}></p>
     </>
